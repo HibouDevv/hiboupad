@@ -1,1 +1,1 @@
-My website for the Code Camp Discord Server hackathon.
+My website for the Code Cafe Discord Server hackathon.
