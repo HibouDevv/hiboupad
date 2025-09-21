@@ -11,10 +11,10 @@ firebase.auth().signInWithPopup(provider)
   .catch((error) => {
     alert(error.message);
   });
-  const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
 document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("signupForm");
+  const form = document.getElementById("loginForm");
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -23,8 +23,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const password = form.password.value;
 
     try {
-      await firebase.auth().createUserWithEmailAndPassword(email, password);
-      alert("Account created! Redirecting to HibouPad...");
+      await firebase.auth().signInWithEmailAndPassword(email, password);
+      alert("Logged in! Redirecting to HibouPad...");
       window.location.href = "board.html";
     } catch (error) {
       alert(error.message);

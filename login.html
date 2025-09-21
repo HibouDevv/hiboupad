@@ -10,21 +10,34 @@
 <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js"></script>
 
 <script>
-  const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    appId: "YOUR_APP_ID"
-  };
+  // Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
-  firebase.initializeApp(firebaseConfig);
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyCA5IUy9WyR_YsonmjqQ2DQ8ZofvSS4agw",
+  authDomain: "hiboupad.firebaseapp.com",
+  projectId: "hiboupad",
+  storageBucket: "hiboupad.firebasestorage.app",
+  messagingSenderId: "358533596695",
+  appId: "1:358533596695:web:5a607d7915dc3cb89a7e52",
+  measurementId: "G-NBS8JCJHZM"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 </script>
 </head>
 <body class="bg-gray-50 flex items-center justify-center min-h-screen">
 
   <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
     <h2 class="text-2xl font-bold text-indigo-600 mb-6 text-center">Welcome Back</h2>
-
+    <button onclick="signInWithGoogle()" class="bg-red-500 text-white px-4 py-2 rounded">Sign in with Google</button>
     <form id="loginForm" class="space-y-4">
       <div>
         <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
