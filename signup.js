@@ -1,33 +1,25 @@
-import { initializeApp } from "firebase/app";
-
-const provider = new firebase.auth.GoogleAuthProvider();
-
-firebase.auth().signInWithPopup(provider)
-  .then((result) => {
-    const user = result.user;
-    alert(`Welcome, ${user.displayName}!`);
-    window.location.href = "board.html";
-  })
-  .catch((error) => {
-    alert(error.message);
-  });
-  const app = initializeApp(firebaseConfig);
-
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("signupForm");
 
-  form.addEventListener("submit", async (e) => {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
 
+    const name = form.name.value;
     const email = form.email.value;
     const password = form.password.value;
 
-    try {
-      await firebase.auth().createUserWithEmailAndPassword(email, password);
-      alert("Account created! Redirecting to HibouPad...");
-      window.location.href = "board.html";
-    } catch (error) {
-      alert(error.message);
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const existingUser = users.find(u => u.email === email);
+
+    if (existingUser) {
+      alert("Email already exists. Please log in instead.");
+    } else {
+      const newUser = { name, email, password };
+      users.push(newUser);
+      localStorage.setItem('users', JSON.stringify(users));
+      localStorage.setItem('currentUser', JSON.stringify(newUser));
+      alert("Account created! Redirecting to dashboard...");
+      window.location.href = "dashboard.html";
     }
   });
 });
