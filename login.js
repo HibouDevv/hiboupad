@@ -1,33 +1,21 @@
-import { initializeApp } from "firebase/app";
-
-const provider = new firebase.auth.GoogleAuthProvider();
-
-firebase.auth().signInWithPopup(provider)
-  .then((result) => {
-    const user = result.user;
-    alert(`Welcome, ${user.displayName}!`);
-    window.location.href = "board.html";
-  })
-  .catch((error) => {
-    alert(error.message);
-  });
-const app = initializeApp(firebaseConfig);
-
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("loginForm");
 
-  form.addEventListener("submit", async (e) => {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
 
     const email = form.email.value;
     const password = form.password.value;
 
-    try {
-      await firebase.auth().signInWithEmailAndPassword(email, password);
-      alert("Logged in! Redirecting to HibouPad...");
-      window.location.href = "board.html";
-    } catch (error) {
-      alert(error.message);
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const user = users.find(u => u.email === email && u.password === password);
+
+    if (user) {
+      localStorage.setItem('currentUser', JSON.stringify(user));
+      alert("Logged in! Redirecting to dashboard...");
+      window.location.href = "dashboard.html";
+    } else {
+      alert("Invalid email or password.");
     }
   });
 });
