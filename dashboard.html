@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard | HibouPad</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+  <!-- Header -->
+  <header class="bg-white shadow-md py-6 px-8 flex justify-between items-center">
+    <h1 class="text-3xl font-bold text-indigo-600">HibouPad Dashboard</h1>
+    <button id="logoutBtn" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Logout</button>
+  </header>
+
+  <!-- Main Section -->
+  <main class="px-8 py-6">
+    <div class="mb-6">
+      <button id="createBoardBtn" class="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700">Create New Board</button>
+    </div>
+
+    <div id="boardsList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Boards will be rendered here -->
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center py-6 text-sm text-gray-500">
+    © 2025 HibouPad. Built with 🦉 for education.
+  </footer>
+
+<script src="dashboard.js" defer></script>
+</body>
+</html>
