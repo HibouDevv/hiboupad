@@ -1,7 +1,65 @@
-<script>
-  firebase.auth().onAuthStateChanged((user) => {
-    if (!user) {
-      window.location.href = "login.html";
-    }
-  });
-</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HibouPad Board</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+  <!-- Header -->
+  <header class="bg-white shadow-md py-6 px-8 flex justify-between items-center">
+    <div class="flex items-center">
+      <button id="backBtn" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 mr-4">Back to Dashboard</button>
+      <h1 class="text-3xl font-bold text-indigo-600">HibouPad</h1>
+    </div>
+    <div>
+      <button id="shareBtn" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 mr-4">Share Board</button>
+      <button id="logoutBtn" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Logout</button>
+    </div>
+  </header>
+
+  <!-- Main Section -->
+  <main class="px-8 py-6">
+    <!-- Board Area -->
+    <section>
+      <h2 class="text-2xl font-semibold mb-4">Notes Board</h2>
+      <div id="notesGrid" class="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+        <!-- Notes will be inserted here -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="text-center py-6 text-sm text-gray-500">
+    © 2025 HibouPad. Built with 🦉 for education.
+  </footer>
+
+  <!-- Floating Add Button -->
+  <button id="addNoteBtn" class="fixed bottom-6 right-6 bg-indigo-600 text-white w-16 h-16 rounded-full shadow-lg hover:bg-indigo-700 flex items-center justify-center text-2xl">+</button>
+
+  <!-- Quick Add Note Modal -->
+  <div id="addNoteModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+      <h2 class="text-xl font-bold mb-4">Add New Note</h2>
+      <form id="quickNoteForm">
+        <div class="mb-4">
+          <label for="quickTitle" class="block text-sm font-medium text-gray-700">Title</label>
+          <input type="text" id="quickTitle" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+        </div>
+        <div class="mb-4">
+          <label for="quickContent" class="block text-sm font-medium text-gray-700">Content</label>
+          <textarea id="quickContent" rows="4" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+        </div>
+        <div class="flex justify-end space-x-2">
+          <button type="button" id="cancelBtn" class="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">Cancel</button>
+          <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">Add Note</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+<script src="board.js" defer></script>
+</body>
+</html>
