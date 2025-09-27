@@ -22,11 +22,15 @@ document.addEventListener("DOMContentLoaded", () => {
   let notes = board.notes;
 
   const colors = ['bg-yellow-200', 'bg-pink-200', 'bg-blue-200', 'bg-green-200', 'bg-purple-200', 'bg-orange-200'];
+  let selectedColor = colors[Math.floor(Math.random() * colors.length)];
 
-  // Assign colors to existing notes if missing
+  // Assign colors to existing notes if missing and initialize heartedBy
   notes.forEach(note => {
     if (!note.color) {
       note.color = colors[Math.floor(Math.random() * colors.length)];
+    }
+    if (!note.heartedBy) {
+      note.heartedBy = [];
     }
   });
 
@@ -38,6 +42,26 @@ document.addEventListener("DOMContentLoaded", () => {
   const addNoteModal = document.getElementById('addNoteModal');
   const quickNoteForm = document.getElementById('quickNoteForm');
   const cancelBtn = document.getElementById('cancelBtn');
+  const colorSelector = document.getElementById('colorSelector');
+
+  function populateColorSelector() {
+    colorSelector.innerHTML = '';
+    colors.forEach(color => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = `modalColorBtn w-8 h-8 rounded-full ${color} border-2 ${color === selectedColor ? 'border-indigo-500' : 'border-gray-300'}`;
+      btn.dataset.color = color;
+      colorSelector.appendChild(btn);
+    });
+  }
+
+  // Event delegation for modal color buttons
+  colorSelector.addEventListener('click', (e) => {
+    if (e.target.classList.contains('modalColorBtn')) {
+      selectedColor = e.target.dataset.color;
+      populateColorSelector(); // Update borders
+    }
+  });
 
   function renderNotes() {
     notesGrid.innerHTML = '';
@@ -49,8 +73,13 @@ document.addEventListener("DOMContentLoaded", () => {
         <p class="mb-4 text-gray-700">${note.content}</p>
         <p class="text-sm text-gray-600 mb-2">By: ${note.author}</p>
         <div class="flex items-center mb-4">
-          <button class="heartBtn bg-red-500 text-white px-3 py-1 rounded mr-2" data-id="${note.id}">❤️ ${note.hearts}</button>
-          ${note.author === currentUser.name ? `<button class="deleteBtn bg-gray-500 text-white px-2 py-1 rounded" data-id="${note.id}">Delete</button>` : ''}
+          <button class="heartBtn bg-white text-red-500 border border-red-500 px-3 py-1 rounded mr-2 hover:bg-red-50" data-id="${note.id}">❤️ ${note.heartedBy.length}</button>
+          ${note.author === currentUser.name ? `
+            <div class="flex space-x-1 mr-2">
+              ${colors.map(color => `<button class="colorBtn w-6 h-6 rounded-full ${color} border-2 border-gray-300" data-id="${note.id}" data-color="${color}"></button>`).join('')}
+            </div>
+            <button class="deleteBtn bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700" data-id="${note.id}">Delete</button>
+          ` : ''}
         </div>
         <div class="comments mb-4">
           <h4 class="font-semibold mb-2">Comments:</h4>
@@ -72,7 +101,28 @@ document.addEventListener("DOMContentLoaded", () => {
         const id = parseInt(e.target.dataset.id);
         const note = notes.find(n => n.id === id);
         if (note) {
-          note.hearts++;
+          if (note.heartedBy.includes(currentUser.name)) {
+            // Remove heart
+            note.heartedBy = note.heartedBy.filter(u => u !== currentUser.name);
+          } else {
+            // Add heart
+            note.heartedBy.push(currentUser.name);
+          }
+          board.notes = notes;
+          localStorage.setItem('boards', JSON.stringify(boards));
+          renderNotes();
+        }
+      });
+    });
+
+    // Add event listeners for color change buttons
+    document.querySelectorAll('.colorBtn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const id = parseInt(e.target.dataset.id);
+        const newColor = e.target.dataset.color;
+        const note = notes.find(n => n.id === id);
+        if (note && note.author === currentUser.name) {
+          note.color = newColor;
           board.notes = notes;
           localStorage.setItem('boards', JSON.stringify(boards));
           renderNotes();
@@ -128,6 +178,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   addNoteBtn.addEventListener('click', () => {
+    selectedColor = colors[Math.floor(Math.random() * colors.length)];
+    populateColorSelector();
     addNoteModal.classList.remove('hidden');
   });
 
@@ -139,15 +191,14 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
     const title = document.getElementById('quickTitle').value || 'Untitled';
     const content = document.getElementById('quickContent').value || 'No content';
-    const randomColor = colors[Math.floor(Math.random() * colors.length)];
     const newNote = {
       id: Date.now(),
       title,
       content,
-      hearts: 0,
+      heartedBy: [],
       comments: [],
       author: currentUser.name,
-      color: randomColor
+      color: selectedColor
     };
     notes.push(newNote);
     board.notes = notes;
