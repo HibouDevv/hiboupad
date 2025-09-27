@@ -148,3 +148,43 @@ footer {
     text-shadow: 0 0 20px rgba(99, 102, 241, 0.8), 0 0 30px rgba(99, 102, 241, 0.6);
   }
 }
+
+/* Enhanced note styling */
+.bg-yellow-200, .bg-pink-200, .bg-blue-200, .bg-green-200, .bg-purple-200, .bg-orange-200 {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.bg-yellow-200:hover, .bg-pink-200:hover, .bg-blue-200:hover, .bg-green-200:hover, .bg-purple-200:hover, .bg-orange-200:hover {
+  transform: translateY(-5px) rotate(1deg);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Heart button animation */
+.heartBtn {
+  transition: all 0.2s ease;
+}
+
+.heartBtn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.heartBtn:active {
+  transform: scale(0.95);
+}
+
+/* Delete button animation */
+.deleteBtn {
+  transition: all 0.2s ease;
+}
+
+.deleteBtn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.deleteBtn:active {
+  transform: scale(0.95);
+}
