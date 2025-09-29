@@ -5,32 +5,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard | HibouPad</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
 </head>
 <body class="bg-gray-50 text-gray-800">
 
   <!-- Header -->
   <header class="bg-white shadow-md py-6 px-8 flex justify-between items-center">
     <h1 class="text-3xl font-bold text-indigo-600">HibouPad Dashboard</h1>
-    <button id="logoutBtn" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Logout</button>
+    <a href="{{ url_for('logout') }}" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Logout</a>
   </header>
 
   <!-- Main Section -->
   <main class="px-8 py-6">
-    <div class="mb-6">
-      <button id="createBoardBtn" class="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700">Create New Board</button>
-    </div>
-
     <div id="boardsList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <!-- Boards will be rendered here -->
     </div>
   </main>
+
+  <!-- Floating Action Button -->
+  <button id="createBoardBtn" class="fixed bottom-6 right-6 bg-indigo-600 text-white w-16 h-16 rounded-full shadow-lg hover:bg-indigo-700 transition-colors duration-200 flex items-center justify-center text-2xl font-bold">
+    +
+  </button>
+
+  <!-- Notification -->
+  <div id="notification" class="fixed top-6 right-6 bg-green-500 text-white px-4 py-2 rounded shadow-lg hidden">
+    <span id="notificationText"></span>
+  </div>
 
   <!-- Footer -->
   <footer class="text-center py-6 text-sm text-gray-500">
     © 2025 HibouPad. Built with 🦉 for education.
   </footer>
 
-<script src="dashboard.js" defer></script>
+<script src="{{ url_for('static', filename='dashboard.js') }}" defer></script>
 </body>
 </html>

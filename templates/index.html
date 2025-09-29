@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>HibouPad</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
 </head>
 <body class="bg-gray-50 text-gray-800">
 
@@ -13,8 +13,8 @@
   <header class="bg-white shadow-md py-6 px-8 flex justify-between items-center">
     <h1 class="text-3xl font-bold text-indigo-600">HibouPad</h1>
     <div>
-      <a href="login.html" class="text-indigo-600 font-medium mr-4 hover:underline">Log In</a>
-      <a href="signup.html" class="btn-effect bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Sign Up</a>
+      <a href="{{ url_for('login') }}" class="text-indigo-600 font-medium mr-4 hover:underline">Log In</a>
+      <a href="{{ url_for('signup') }}" class="btn-effect bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Sign Up</a>
     </div>
   </header>
 
@@ -22,27 +22,19 @@
   <section class="flex flex-col items-center justify-center text-center px-6 py-16">
     <h2 class="text-4xl font-semibold mb-4">Collaborate. Share. Learn.</h2>
     <p class="text-lg text-gray-600 max-w-xl mb-6">
-      HibouPad is your classroom’s digital wall—post notes, react with hearts, and leave comments. Built for students and teachers to learn together.
+      HibouPad is your classroom’s digital wall—post notes and share with your class. Built for students and teachers to learn together.
     </p>
-    <a href="signup.html" id="getStarted" class="btn-effect bg-indigo-600 text-white px-6 py-3 rounded-lg text-lg hover:bg-indigo-700">
+    <a href="{{ url_for('signup') }}" id="getStarted" class="btn-effect bg-indigo-600 text-white px-6 py-3 rounded-lg text-lg hover:bg-indigo-700">
       Get Started
     </a>
   </section>
 
   <!-- Features Section -->
   <section class="bg-white py-12 px-6">
-    <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+    <div class="max-w-4xl mx-auto grid grid-cols-1 gap-6 text-center">
       <div class="p-4 border rounded shadow-sm">
         <h3 class="text-xl font-bold text-indigo-600 mb-2">📝 Post Notes</h3>
         <p>Create and share notes with your class in real time.</p>
-      </div>
-      <div class="p-4 border rounded shadow-sm">
-        <h3 class="text-xl font-bold text-indigo-600 mb-2">❤️ Heart & React</h3>
-        <p>Show appreciation for helpful notes with hearts.</p>
-      </div>
-      <div class="p-4 border rounded shadow-sm">
-        <h3 class="text-xl font-bold text-indigo-600 mb-2">💬 Comment</h3>
-        <p>Discuss and collaborate directly on each note.</p>
       </div>
     </div>
   </section>

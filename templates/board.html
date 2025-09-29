@@ -5,19 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>HibouPad Board</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
 </head>
 <body class="bg-gray-50 text-gray-800">
 
   <!-- Header -->
   <header class="bg-white shadow-md py-6 px-8 flex justify-between items-center">
     <div class="flex items-center">
-      <button id="backBtn" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 mr-4">Back to Dashboard</button>
+      <a href="{{ url_for('dashboard') }}" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 mr-4">Back to Dashboard</a>
       <h1 class="text-3xl font-bold text-indigo-600">HibouPad</h1>
     </div>
     <div>
-      <button id="shareBtn" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 mr-4">Share Board</button>
-      <button id="logoutBtn" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Logout</button>
+      <a href="{{ url_for('logout') }}" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Logout</a>
     </div>
   </header>
 
@@ -67,6 +66,6 @@
     </div>
   </div>
 
-<script src="board.js" defer></script>
+<script src="{{ url_for('static', filename='board.js') }}" defer></script>
 </body>
 </html>
