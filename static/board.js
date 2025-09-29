@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const boardId = "{{ board_id }}";
+  // boardId is defined in the template
   if (!boardId) {
     window.location.href = "/dashboard";
     return;

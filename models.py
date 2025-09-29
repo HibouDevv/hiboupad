@@ -27,8 +27,9 @@ def init_db():
                 FOREIGN KEY (user_id) REFERENCES users (id)
             )
         ''')
+        conn.execute('DROP TABLE IF EXISTS notes')
         conn.execute('''
-            CREATE TABLE IF NOT EXISTS notes (
+            CREATE TABLE notes (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 board_id INTEGER NOT NULL,
                 title TEXT NOT NULL,
@@ -96,13 +97,13 @@ def create_board(user_id, name):
 
 def delete_board(board_id, user_id):
     with get_db() as conn:
-        conn.execute('DELETE FROM boards WHERE id = ? AND user_id = ?', (board_id, user_id))
-        return conn.rowcount > 0
+        cursor = conn.execute('DELETE FROM boards WHERE id = ? AND user_id = ?', (board_id, user_id))
+        return cursor.rowcount > 0
 
 def update_board(board_id, user_id, new_name):
     with get_db() as conn:
-        conn.execute('UPDATE boards SET name = ? WHERE id = ? AND user_id = ?', (new_name, board_id, user_id))
-        return conn.rowcount > 0
+        cursor = conn.execute('UPDATE boards SET name = ? WHERE id = ? AND user_id = ?', (new_name, board_id, user_id))
+        return cursor.rowcount > 0
 
 def get_notes_by_board(board_id):
     with get_db() as conn:
@@ -131,11 +132,11 @@ def update_note(note_id, title=None, content=None, color=None):
         if updates:
             query = f'UPDATE notes SET {", ".join(updates)} WHERE id = ?'
             params.append(note_id)
-            conn.execute(query, params)
-            return conn.rowcount > 0
+            cursor = conn.execute(query, params)
+            return cursor.rowcount > 0
         return False
 
 def delete_note(note_id):
     with get_db() as conn:
-        conn.execute('DELETE FROM notes WHERE id = ?', (note_id,))
-        return conn.rowcount > 0
+        cursor = conn.execute('DELETE FROM notes WHERE id = ?', (note_id,))
+        return cursor.rowcount > 0
