@@ -1,13 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-  if (!currentUser) {
-    window.location.href = "login.html";
-    return;
-  }
-
   const boardsList = document.getElementById('boardsList');
   const createBoardBtn = document.getElementById('createBoardBtn');
-  const logoutBtn = document.getElementById('logoutBtn');
+  const exportBtn = document.getElementById('exportBtn');
+  const importBtn = document.getElementById('importBtn');
+  const importInput = document.getElementById('importInput');
 
   let boards = JSON.parse(localStorage.getItem('boards')) || [];
 
@@ -19,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
       boardDiv.innerHTML = `
         <h3 class="text-2xl font-bold mb-4 text-gray-800">${board.name}</h3>
         <div class="flex space-x-2">
-          <a href="board.html?id=${board.id}" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition-colors duration-200">Open Board</a>
+          <a href="./board.html?id=${board.id}" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition-colors duration-200">Open Board</a>
           <button class="editBtn bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition-colors duration-200" data-id="${board.id}">Edit</button>
           <button class="deleteBtn bg-red-500 text-white px-4 py-2 rounded hover:bg-red-700 transition-colors duration-200" data-id="${board.id}">Delete</button>
         </div>
@@ -38,9 +34,43 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  logoutBtn.addEventListener('click', () => {
-    localStorage.removeItem('currentUser');
-    window.location.href = "index.html";
+  exportBtn.addEventListener('click', () => {
+    const data = {};
+    for (let key in localStorage) {
+      data[key] = localStorage.getItem(key);
+    }
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'hiboupad-data.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  importBtn.addEventListener('click', () => {
+    importInput.click();
+  });
+
+  importInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const data = JSON.parse(e.target.result);
+          for (let key in data) {
+            localStorage.setItem(key, data[key]);
+          }
+          boards = JSON.parse(localStorage.getItem('boards')) || [];
+          renderBoards();
+          alert('Data imported successfully!');
+        } catch (error) {
+          alert('Invalid JSON file.');
+        }
+      };
+      reader.readAsText(file);
+    }
   });
 
   // Event delegation for edit and delete
