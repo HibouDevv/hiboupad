@@ -4,15 +4,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard | HibouPad</title>
+  <link rel="icon" href="images/hiboupad-logo-notext-removebg.png" type="image/x-icon">
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="static/styles.css" />
 </head>
 <body class="bg-gray-50 text-gray-800">
 
   <!-- Header -->
   <header class="bg-white shadow-md py-6 px-8 flex justify-between items-center">
-    <h1 class="text-3xl font-bold text-indigo-600">HibouPad Dashboard</h1>
-    <button id="logoutBtn" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">Logout</button>
+    <img src="images/hiboupad-logo-notext-removebg.png" alt="HibouPad Logo" class="h-16 w-auto">
+    <div class="flex space-x-2">
+      <button id="exportBtn" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Export JSON</button>
+      <input type="file" id="importInput" accept="application/json" class="hidden" />
+      <button id="importBtn" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Import JSON</button>
+      <a href="index.html" class="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700">Back to Home</a>
+    </div>
   </header>
 
   <!-- Main Section -->
